@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>Three Stage Quiz</title>
@@ -7,11 +8,11 @@
   <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 
   <style>
-   /* Give the quizzes a parent container that can fill the page minus a bit of margin, etc. */
+    /* Give the quizzes a parent container that can fill the page minus a bit of margin, etc. */
     body {
-        margin: 20px;
-        font-family: sans-serif;
-        /* Optionally force full view height: 
+      margin: 20px;
+      font-family: sans-serif;
+      /* Optionally force full view height: 
             height: 100vh; 
             margin: 0; 
             padding: 20px; 
@@ -20,116 +21,133 @@
 
     /* Common Draggable styling */
     .draggable {
-        display: inline-block;
-        padding: 8px;
-        margin: 5px;
-        border: 1px solid #aaa;
-        cursor: grab;
-        background-color: #eee;
+      display: inline-block;
+      padding: 8px;
+      margin: 5px;
+      border: 1px solid #aaa;
+      cursor: grab;
+      background-color: #eee;
     }
 
     /* Hide until needed */
     .hidden {
-        display: none;
+      display: none;
     }
 
     /* Quiz layout: flex container, column direction
     so that .dropzone can fill leftover vertical space. */
     .quizContent {
-        display: flex;
-        flex-direction: column;
-        /* Adjust as desired so there's enough space for everything. */
-        height: 70vh;
-        /* Or you can use: height: calc(100vh - 200px); */
+      display: flex;
+      flex-direction: column;
+      /* Adjust as desired so there's enough space for everything. */
+      height: 70vh;
+      /* Or you can use: height: calc(100vh - 200px); */
     }
 
     /* The row of drop boxes: fill leftover vertical space by flex: 1 */
     .dropzone {
-        display: flex;
-        flex: 1;
-        margin-bottom: 10px;
+      display: flex;
+      flex: 1;
+      margin-bottom: 10px;
     }
 
     /* Each drop box shares these styles */
     .dropbox {
-        position: relative;     /* needed to contain the pseudo-element absolutely */
-        background: #fff;       /* or whatever base color you want behind the image */
-        flex: 1;
-        margin: 5px;
-        border: 2px dashed #333;
-        display: flex;
-        flex-direction: column;
-        min-height: 100px;
-        overflow-y: auto;
+      position: relative;
+      /* needed to contain the pseudo-element absolutely */
+      background: #fff;
+      /* or whatever base color you want behind the image */
+      flex: 1;
+      margin: 5px;
+      border: 2px dashed #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100px;
+      overflow-y: auto;
     }
 
-/* For box #1, #2, #3, apply the same approach with different images */
-.dropbox[data-box="1"]::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  pointer-events: none;
-  background: url("21p.png") center center / cover no-repeat;
-  opacity: 0.3;
-  z-index: 0; /* behind children */
-}
+    /* For box #1, #2, #3, apply the same approach with different images */
+    .dropbox[data-box="1"]::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      background: url("21p.png") center center / cover no-repeat;
+      opacity: 0.3;
+      z-index: 0;
+      /* behind children */
+    }
 
-.dropbox[data-box="2"]::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  pointer-events: none;
-  background: url("weeknd.png") center center / cover no-repeat;
-  opacity: 0.3;
-  z-index: 0;
-}
+    .dropbox[data-box="2"]::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      background: url("weeknd.png") center center / cover no-repeat;
+      opacity: 0.3;
+      z-index: 0;
+    }
 
-.dropbox[data-box="3"]::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  pointer-events: none;
-  background: url("wf.png") center center / cover no-repeat;
-  opacity: 0.3;
-  z-index: 0;
-}
+    .dropbox[data-box="3"]::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      background: url("wf.png") center center / cover no-repeat;
+      opacity: 0.3;
+      z-index: 0;
+    }
 
-.dropbox[data-box="4"]::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  pointer-events: none;
-  background: url("film.png") center center / cover no-repeat;
-  opacity: 0.3;
-  z-index: 0;
-}
+    .dropbox[data-box="4"]::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      background: url("film.png") center center / cover no-repeat;
+      opacity: 0.3;
+      z-index: 0;
+    }
 
-.dropbox[data-box="5"]::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  pointer-events: none;
-  background: url("ballet.jpg") center center / cover no-repeat;
-  opacity: 0.3;
-  z-index: 0;
-}
+    .dropbox[data-box="5"]::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      background: url("ballet.jpg") center center / cover no-repeat;
+      opacity: 0.3;
+      z-index: 0;
+    }
 
-/* Ensure the contents (the dragged items) appear above the pseudo-element */
-.dropbox .draggable {
-  position: relative;
-  z-index: 1;
-}
+    /* Ensure the contents (the dragged items) appear above the pseudo-element */
+    .dropbox .draggable {
+      position: relative;
+      z-index: 1;
+    }
 
     /* Container of the items to be sorted. Let it auto-size. */
     .strings-container {
-        border: 1px solid #ccc;
-        padding: 10px;
-        /* Optionally set a max-height if needed: 
+      border: 1px solid #ccc;
+      padding: 10px;
+      /* Optionally set a max-height if needed: 
             max-height: 150px; 
             overflow-y: auto; 
         */
     }
-
   </style>
 </head>
 
@@ -156,17 +174,17 @@
   <!-- Quiz 2 -->
   <div id="quiz2" class="hidden">
     <h2>Quiz 2</h2>
-    
+
     <!-- A flex container that fills vertical space -->
     <div class="quizContent">
-        <!-- The row of drop boxes -->
-        <div class="dropzone">
+      <!-- The row of drop boxes -->
+      <div class="dropzone">
         <div class="dropbox" id="box1" data-box="1"></div>
         <div class="dropbox" id="box2" data-box="2"></div>
         <div class="dropbox" id="box3" data-box="3"></div>
-        </div>
+      </div>
 
-        <div id="stringsContainer2" class="strings-container">
+      <div id="stringsContainer2" class="strings-container">
         <!-- Example dictionary data. You can add/edit these. 
             data-correct-box="x" indicates which box is correct. -->
         <div class="draggable" data-correct-box="1">sometimes quiet is violent</div>
@@ -184,7 +202,7 @@
         <div class="draggable" data-correct-box="3">sweetly pass my careless days</div>
         <div class="draggable" data-correct-box="2">your blade it might be too sharp</div>
         <div class="draggable" data-correct-box="1">a stone's throw from a creek we used to roam</div>
-        </div>
+      </div>
     </div>
   </div>
 
@@ -192,30 +210,30 @@
   <div id="quiz3" class="hidden">
     <h2>Quiz 3</h2>
     <div class="quizContent">
-    <div class="dropzone">
-      <div class="dropbox" id="box4" data-box="4"></div>
-      <div class="dropbox" id="box5" data-box="5"></div>
-    </div>
+      <div class="dropzone">
+        <div class="dropbox" id="box4" data-box="4"></div>
+        <div class="dropbox" id="box5" data-box="5"></div>
+      </div>
 
-    <div id="stringsContainer3" class="strings-container">
-      <!-- 16 items, data-correct-box either 1 or 2 -->
-      <div class="draggable" data-correct-box="5">Fourth position</div>
-      <div class="draggable" data-correct-box="4">Fourth wall</div>
-      <div class="draggable" data-correct-box="4">Vignette</div>
-      <div class="draggable" data-correct-box="5">Arabesque</div>
-      <div class="draggable" data-correct-box="5">Devant</div>
-      <div class="draggable" data-correct-box="4">Montage</div>
-      <div class="draggable" data-correct-box="5">Battement</div>
-      <div class="draggable" data-correct-box="4">Leitmotif</div>
-      <div class="draggable" data-correct-box="4">Denouement</div>
-      <div class="draggable" data-correct-box="5">Cabriole</div>
-      <div class="draggable" data-correct-box="4">Auteur</div>
-      <div class="draggable" data-correct-box="5">Fondu</div>
-      <div class="draggable" data-correct-box="5">Sissonne</div>
-      <div class="draggable" data-correct-box="4">Mise-en-scene</div>
-      <div class="draggable" data-correct-box="4">Juxtaposition</div>
-      <div class="draggable" data-correct-box="5">Variation</div>
-    </div>
+      <div id="stringsContainer3" class="strings-container">
+        <!-- 16 items, data-correct-box either 1 or 2 -->
+        <div class="draggable" data-correct-box="5">Fourth position</div>
+        <div class="draggable" data-correct-box="4">Fourth wall</div>
+        <div class="draggable" data-correct-box="4">Vignette</div>
+        <div class="draggable" data-correct-box="5">Arabesque</div>
+        <div class="draggable" data-correct-box="5">Devant</div>
+        <div class="draggable" data-correct-box="4">Montage</div>
+        <div class="draggable" data-correct-box="5">Battement</div>
+        <div class="draggable" data-correct-box="4">Leitmotif</div>
+        <div class="draggable" data-correct-box="4">Denouement</div>
+        <div class="draggable" data-correct-box="5">Cabriole</div>
+        <div class="draggable" data-correct-box="4">Auteur</div>
+        <div class="draggable" data-correct-box="5">Fondu</div>
+        <div class="draggable" data-correct-box="5">Sissonne</div>
+        <div class="draggable" data-correct-box="4">Mise-en-scene</div>
+        <div class="draggable" data-correct-box="4">Juxtaposition</div>
+        <div class="draggable" data-correct-box="5">Variation</div>
+      </div>
     </div>
   </div>
 
@@ -229,7 +247,7 @@
 
     // --- Quiz 1: Check letter order ---
     // Desired order: MLAMJNT
-    const correctQuiz1Order = ['M','L','A','M','J','N','T'];
+    const correctQuiz1Order = ['M', 'L', 'A', 'M', 'J', 'N', 'T'];
     const lettersContainer = document.getElementById('lettersContainer');
 
     // Make lettersContainer sortable
@@ -274,22 +292,27 @@
     });
 
     function checkQuiz2() {
-      // Check all child .draggable in each box
       let allCorrect = true;
 
-      // Each box has data-box = "1", "2", or "3"
-      [box1, box2, box3].forEach(box => {
-        const boxNum = box.dataset.box; 
-        const children = box.querySelectorAll('.draggable');
-        children.forEach(child => {
-          if (child.dataset.correctBox !== boxNum) {
-            allCorrect = false;
-          }
-        });
+      // Grab all items for Quiz 2:
+      const allItems = document.querySelectorAll('#quiz2 .draggable');
+
+      allItems.forEach(item => {
+        // The parent box (or container) the item is currently in
+        const parentEl = item.parentElement;
+
+        // If the parent doesn't have data-box, it's likely still in the
+        // #stringsContainer2 or somewhere else not marked with data-box.
+        if (!parentEl.dataset.box) {
+          allCorrect = false;
+          return;
+        }
+
+        // Compare the parent's data-box with the item's data-correct-box
+        if (parentEl.dataset.box !== item.dataset.correctBox) {
+          allCorrect = false;
+        }
       });
-      // Also check that no item that belongs in box 1,2,3 got left behind in stringsContainer2
-      // If you require that all must be moved out of the container to pass, we can check that too:
-      // but that's optional based on your preference.
 
       if (allCorrect) {
         ding.play();
@@ -299,6 +322,7 @@
         }, 1000);
       }
     }
+
 
     // --- Quiz 3: 16 strings, 2 boxes ---
     const box4 = document.getElementById('box4');
@@ -319,26 +343,28 @@
     });
 
     function checkQuiz3() {
-      // Similar approach: box1q3.dataset.box="1", box2q3.dataset.box="2"
       let allCorrect = true;
-      [box4, box5].forEach(box => {
-        const boxNum = box.dataset.box;
-        const children = box.querySelectorAll('.draggable');
-        children.forEach(child => {
-          if (child.dataset.correctBox !== boxNum) {
-            allCorrect = false;
-          }
-        });
+      const allItems = document.querySelectorAll('#quiz3 .draggable');
+
+      allItems.forEach(item => {
+        const parentEl = item.parentElement;
+        if (!parentEl.dataset.box) {
+          allCorrect = false;
+          return;
+        }
+        if (parentEl.dataset.box !== item.dataset.correctBox) {
+          allCorrect = false;
+        }
       });
 
       if (allCorrect) {
         tada.play();
         setTimeout(() => {
-          // Redirect to congrats page
           window.location.href = 'congrats.html';
         }, 2000);
       }
     }
+
 
     // Utility to compare arrays
     function arraysMatch(a, b) {
@@ -350,4 +376,5 @@
     }
   </script>
 </body>
+
 </html>
