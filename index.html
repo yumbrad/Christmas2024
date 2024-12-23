@@ -8,25 +8,48 @@
   <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 
   <style>
-    /* Give the quizzes a parent container that can fill the page minus a bit of margin, etc. */
+    @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap');
+
     body {
-      margin: 20px;
-      font-family: sans-serif;
-      /* Optionally force full view height: 
-            height: 100vh; 
-            margin: 0; 
-            padding: 20px; 
-        */
+      margin: 0;
+      padding: 20px;
+      font-family: 'Merriweather', serif;
+      color: #3A3A3A;
+      /* Subtle cream background or optional repeating pattern */
+      background-color: #FAF9F7;
+      /* If you prefer a subtle pattern, see: https://subtlepatterns.com/ 
+     e.g. a faint “snowflakes” pattern image: */
+      background: #FAF9F7 url("fresh_snow.webp") repeat;
     }
 
-    /* Common Draggable styling */
+    h2 {
+      color: #7F3F2B;
+      /* Warm, muted red/brown */
+      margin-top: 0.5em;
+      border-bottom: 2px solid #B03D2D;
+      /* Slightly deeper line under heading */
+      padding-bottom: 0.3em;
+    }
+
+    p {
+      margin: 0.5em 0 1em;
+    }
+
     .draggable {
       display: inline-block;
-      padding: 8px;
+      padding: 8px 12px;
       margin: 5px;
-      border: 1px solid #aaa;
+      border: 1px solid #ADADAD;
+      border-radius: 6px;
       cursor: grab;
-      background-color: #eee;
+      background-color: #FDFDFB;
+      /* Slight off-white */
+      transition: background-color 0.2s;
+    }
+
+    .draggable:hover {
+      background-color: #F2ECE8;
+      /* Slight warm highlight on hover */
     }
 
     /* Hide until needed */
@@ -39,9 +62,13 @@
     .quizContent {
       display: flex;
       flex-direction: column;
-      /* Adjust as desired so there's enough space for everything. */
       height: 70vh;
-      /* Or you can use: height: calc(100vh - 200px); */
+      background-color: #FDFCF9;
+      /* Another subtle near-white */
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      /* Gentle shadow */
+      border-radius: 8px;
+      padding: 15px;
     }
 
     /* The row of drop boxes: fill leftover vertical space by flex: 1 */
@@ -51,19 +78,18 @@
       margin-bottom: 10px;
     }
 
-    /* Each drop box shares these styles */
     .dropbox {
       position: relative;
-      /* needed to contain the pseudo-element absolutely */
-      background: #fff;
-      /* or whatever base color you want behind the image */
       flex: 1;
       margin: 5px;
-      border: 2px dashed #333;
+      border: 2px dashed #576D4A;
+      /* Muted green */
       display: flex;
       flex-direction: column;
       min-height: 100px;
       overflow-y: auto;
+      background-color: #FEFEFC;
+      /* Subtle difference from body */
     }
 
     /* For box #1, #2, #3, apply the same approach with different images */
@@ -140,13 +166,12 @@
     }
 
     /* Container of the items to be sorted. Let it auto-size. */
+    /* Strings container border & spacing */
     .strings-container {
-      border: 1px solid #ccc;
+      border: 1px solid #AAABAA;
+      background-color: #FAFAF7;
       padding: 10px;
-      /* Optionally set a max-height if needed: 
-            max-height: 150px; 
-            overflow-y: auto; 
-        */
+      border-radius: 6px;
     }
   </style>
 </head>
@@ -188,7 +213,7 @@
         <!-- Example dictionary data. You can add/edit these. 
             data-correct-box="x" indicates which box is correct. -->
         <div class="draggable" data-correct-box="1">sometimes quiet is violent</div>
-        <div class="draggable" data-correct-box="3">paint the waves with green</div>
+        <div class="draggable" data-correct-box="3">the blessings of a peaceful reign</div>
         <div class="draggable" data-correct-box="2">I can’t feel my face</div>
         <div class="draggable" data-correct-box="2">I'm drowning in the night</div>
         <div class="draggable" data-correct-box="1">my lungs will fill and then deflate</div>
@@ -196,7 +221,7 @@
         <div class="draggable" data-correct-box="2">no one’s around to judge me</div>
         <div class="draggable" data-correct-box="3">the bright magnificence of day</div>
         <div class="draggable" data-correct-box="1">I’m forced to deal with what I feel</div>
-        <div class="draggable" data-correct-box="3">the blessings of a peaceful reign</div>
+        <div class="draggable" data-correct-box="3">paint the waves with green</div>
         <div class="draggable" data-correct-box="1">all my problems are gone if I bury them deep</div>
         <div class="draggable" data-correct-box="2">I’m heartless, I’m back to my ways</div>
         <div class="draggable" data-correct-box="3">sweetly pass my careless days</div>
