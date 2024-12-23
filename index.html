@@ -7,36 +7,113 @@
   <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 
   <style>
+   /* Give the quizzes a parent container that can fill the page minus a bit of margin, etc. */
     body {
-      font-family: sans-serif; 
-      margin: 20px;
+        margin: 20px;
+        font-family: sans-serif;
+        /* Optionally force full view height: 
+            height: 100vh; 
+            margin: 0; 
+            padding: 20px; 
+        */
     }
-    .hidden { display: none; }
+
+    /* Common Draggable styling */
     .draggable {
-      display: inline-block;
-      padding: 8px;
-      margin: 5px;
-      border: 1px solid #aaa;
-      cursor: grab;
-      background-color: #eee;
+        display: inline-block;
+        padding: 8px;
+        margin: 5px;
+        border: 1px solid #aaa;
+        cursor: grab;
+        background-color: #eee;
     }
-    /* Quiz 2 and 3 boxes */
+
+    /* Hide until needed */
+    .hidden {
+        display: none;
+    }
+
+    /* Quiz layout: flex container, column direction
+    so that .dropzone can fill leftover vertical space. */
+    .quizContent {
+        display: flex;
+        flex-direction: column;
+        /* Adjust as desired so there's enough space for everything. */
+        height: 70vh;
+        /* Or you can use: height: calc(100vh - 200px); */
+    }
+
+    /* The row of drop boxes: fill leftover vertical space by flex: 1 */
+    .dropzone {
+        display: flex;
+        flex: 1;
+        margin-bottom: 10px;
+    }
+
+    /* Each drop box shares these styles */
     .dropbox {
-      width: 100px; 
-      height: 100px; 
-      border: 2px dashed #333; 
-      display: inline-block; 
-      vertical-align: top; 
-      margin: 10px;
-      background-size: cover;
-      background-position: center;
+        /* Let each box grow/shrink equally; margin for spacing. */
+        flex: 1;
+        margin: 5px;
+        /* Dashed border around the box area. */
+        border: 2px dashed #333;
+        /* So items stack top-down. */
+        display: flex; 
+        flex-direction: column;
+        /* As items are placed inside, height grows. 
+            We do min-height so they remain visible even if empty. */
+        min-height: 100px; 
+        position: relative;  /* for background overlay if needed */
+        overflow-y: auto;
     }
-    /* Container for items in quiz 2 and 3 */
+
+    /* Make the background image fill the box and 50% transparent. 
+    Using background-blend-mode so child elements are not faded. */
+    .dropbox[data-box="1"] {
+        background: 
+            linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)),
+            url("21p.png") center center / cover no-repeat;
+        background-blend-mode: multiply;
+    }
+
+    .dropbox[data-box="2"] {
+        background: 
+            linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)),
+            url("weeknd.png") center center / cover no-repeat;
+        background-blend-mode: multiply;
+    }
+
+    .dropbox[data-box="3"] {
+        background: 
+            linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)),
+            url("wf.png") center center / cover no-repeat;
+        background-blend-mode: multiply;
+    }
+
+    .dropbox[data-box="4"] {
+        background: 
+            linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)),
+            url("film.png") center center / cover no-repeat;
+        background-blend-mode: multiply;
+    }
+
+    .dropbox[data-box="5"] {
+        background: 
+            linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)),
+            url("ballet.jpg") center center / cover no-repeat;
+        background-blend-mode: multiply;
+    }
+
+    /* Container of the items to be sorted. Let it auto-size. */
     .strings-container {
-      border: 1px solid #ccc; 
-      padding: 10px; 
-      margin: 10px 0;
+        border: 1px solid #ccc;
+        padding: 10px;
+        /* Optionally set a max-height if needed: 
+            max-height: 150px; 
+            overflow-y: auto; 
+        */
     }
+
   </style>
 </head>
 
@@ -49,54 +126,59 @@
   <div id="quiz1">
     <h2>Quiz 1</h2>
     <div id="lettersContainer">
-      <!-- They start in alphabetical order: AJLNMMT -->
-      <div class="draggable" data-value="A">A</div>
+      <!-- They start in random order: AJLNMMT -->
+      <div class="draggable" data-value="T">T</div>
       <div class="draggable" data-value="J">J</div>
       <div class="draggable" data-value="L">L</div>
       <div class="draggable" data-value="M">M</div>
-      <div class="draggable" data-value="M">M</div>
       <div class="draggable" data-value="N">N</div>
-      <div class="draggable" data-value="T">T</div>
+      <div class="draggable" data-value="M">M</div>
+      <div class="draggable" data-value="A">A</div>
     </div>
   </div>
 
   <!-- Quiz 2 -->
   <div id="quiz2" class="hidden">
     <h2>Quiz 2</h2>
-    <div style="margin-bottom:20px;">
-      <div class="dropbox" id="box1" data-box="1" style="background-image:url('21p.png')"></div>
-      <div class="dropbox" id="box2" data-box="2" style="background-image:url('weeknd.png')"></div>
-      <div class="dropbox" id="box3" data-box="3" style="background-image:url('wf.png')"></div>
-    </div>
+    
+    <!-- A flex container that fills vertical space -->
+    <div class="quizContent">
+        <!-- The row of drop boxes -->
+        <div class="dropzone">
+        <div class="dropbox" id="box1" data-box="1"></div>
+        <div class="dropbox" id="box2" data-box="2"></div>
+        <div class="dropbox" id="box3" data-box="3"></div>
+        </div>
 
-    <div id="stringsContainer2" class="strings-container">
-      <!-- Example dictionary data. You can add/edit these. 
-           data-correct-box="x" indicates which box is correct. -->
-      <div class="draggable" data-correct-box="1">sometimes quiet is violent</div>
-      <div class="draggable" data-correct-box="3">paint the waves with green</div>
-      <div class="draggable" data-correct-box="2">I can’t feel my face</div>
-      <div class="draggable" data-correct-box="2">I'm drowning in the night</div>
-      <div class="draggable" data-correct-box="1">my lungs will fill and then deflate</div>
-      <div class="draggable" data-correct-box="3">thunder breaks the frozen sky</div>
-      <div class="draggable" data-correct-box="2">no one’s around to judge me</div>
-      <div class="draggable" data-correct-box="3">the bright magnificence of day</div>
-      <div class="draggable" data-correct-box="1">I’m forced to deal with what I feel</div>
-      <div class="draggable" data-correct-box="3">the blessings of a peaceful reign</div>
-      <div class="draggable" data-correct-box="1">all my problems are gone if I bury them deep</div>
-      <div class="draggable" data-correct-box="2">I’m heartless, I’m back to my ways</div>
-      <div class="draggable" data-correct-box="3">sweetly pass my careless days</div>
-      <div class="draggable" data-correct-box="2">your blade it might be too sharp</div>
-      <div class="draggable" data-correct-box="1">a stone's throw from a creek we used to roam</div>
+        <div id="stringsContainer2" class="strings-container">
+        <!-- Example dictionary data. You can add/edit these. 
+            data-correct-box="x" indicates which box is correct. -->
+        <div class="draggable" data-correct-box="1">sometimes quiet is violent</div>
+        <div class="draggable" data-correct-box="3">paint the waves with green</div>
+        <div class="draggable" data-correct-box="2">I can’t feel my face</div>
+        <div class="draggable" data-correct-box="2">I'm drowning in the night</div>
+        <div class="draggable" data-correct-box="1">my lungs will fill and then deflate</div>
+        <div class="draggable" data-correct-box="3">thunder breaks the frozen sky</div>
+        <div class="draggable" data-correct-box="2">no one’s around to judge me</div>
+        <div class="draggable" data-correct-box="3">the bright magnificence of day</div>
+        <div class="draggable" data-correct-box="1">I’m forced to deal with what I feel</div>
+        <div class="draggable" data-correct-box="3">the blessings of a peaceful reign</div>
+        <div class="draggable" data-correct-box="1">all my problems are gone if I bury them deep</div>
+        <div class="draggable" data-correct-box="2">I’m heartless, I’m back to my ways</div>
+        <div class="draggable" data-correct-box="3">sweetly pass my careless days</div>
+        <div class="draggable" data-correct-box="2">your blade it might be too sharp</div>
+        <div class="draggable" data-correct-box="1">a stone's throw from a creek we used to roam</div>
+        </div>
     </div>
   </div>
 
   <!-- Quiz 3 -->
   <div id="quiz3" class="hidden">
     <h2>Quiz 3</h2>
-    <p>Drag each item into the correct box. (2 boxes)</p>
-    <div style="margin-bottom:20px;">
-      <div class="dropbox" id="box1q3" data-box="1" style="background-image:url('film.png')"></div>
-      <div class="dropbox" id="box2q3" data-box="2" style="background-image:url('ballet.jpg')"></div>
+    <div class="quizContent">
+    <div class="dropzone">
+      <div class="dropbox" id="box4" data-box="4"></div>
+      <div class="dropbox" id="box5" data-box="5"></div>
     </div>
 
     <div id="stringsContainer3" class="strings-container">
@@ -117,6 +199,7 @@
       <div class="draggable" data-correct-box="1">Mise-en-scene</div>
       <div class="draggable" data-correct-box="1">Juxtaposition</div>
       <div class="draggable" data-correct-box="2">Variation</div>
+    </div>
     </div>
   </div>
 
