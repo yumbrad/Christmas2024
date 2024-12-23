@@ -285,12 +285,12 @@
     }
 
     // --- Quiz 3: 16 strings, 2 boxes ---
-    const box1q3 = document.getElementById('box1q3');
-    const box2q3 = document.getElementById('box2q3');
+    const box4 = document.getElementById('box4');
+    const box5 = document.getElementById('box5');
     const stringsContainer3 = document.getElementById('stringsContainer3');
 
     let quiz3Sortables = [];
-    [box1q3, box2q3, stringsContainer3].forEach(el => {
+    [box4, box5, stringsContainer3].forEach(el => {
       quiz3Sortables.push(
         new Sortable(el, {
           group: 'quiz3',
@@ -305,7 +305,7 @@
     function checkQuiz3() {
       // Similar approach: box1q3.dataset.box="1", box2q3.dataset.box="2"
       let allCorrect = true;
-      [box1q3, box2q3].forEach(box => {
+      [box4, box5].forEach(box => {
         const boxNum = box.dataset.box;
         const children = box.querySelectorAll('.draggable');
         children.forEach(child => {
