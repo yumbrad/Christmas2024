@@ -100,20 +100,26 @@
       margin-bottom: 10px;
     }
 
-    .dropbox {
-      display: grid;
-      /* 2 columns of equal width; adjust gap as desired */
-      grid-template-columns: repeat(2, 1fr);
-      gap: 5px;
+/* Make each drop box flex to 1/2, 1/3, etc., of the .dropzone */
+.dropbox {
+  flex: 1;           /* fill horizontal space evenly */
+  display: grid;     /* so items can appear in a 2-column grid */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  /* Use min-content or auto for rows so items don't stretch */
+  grid-auto-rows: min-content; 
+  /* Prevent the default grid 'stretch' behavior */
+  align-items: start; 
+  justify-items: start; 
 
-      /* still keep your other styles as needed */
-      position: relative;
-      margin: 5px;
-      border: 2px dashed #576D4A;
-      min-height: 100px;
-      overflow-y: auto;
-      background-color: #FEFEFC;
-    }
+  /* If you had a forced min-height, you can remove or reduce it: */
+  min-height: 100px;
+
+  margin: 5px;
+  border: 2px dashed #576D4A;
+  background-color: #FEFEFC; /* or your holiday color */
+  position: relative;
+  overflow-y: auto;
+}
 
     /* For box #1, #2, #3, apply the same approach with different images */
     .dropbox[data-box="1"]::before {
