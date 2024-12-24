@@ -10,6 +10,13 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap');
 
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+
     body {
       margin: 0;
       padding: 10px;
@@ -19,9 +26,10 @@
       background-color: #FAF9F7;
       /* If you prefer a subtle pattern, see: https://subtlepatterns.com/ 
      e.g. a faint “snowflakes” pattern image: */
-      background: #FAF9F7 url("bg.jpg") no-repeat top;
-      background-size: contain;
-      height: 100%; /* make the body fill the browser window */
+      background: #FAF9F7 url("bg.jpg") repeat-y center top;
+      background-size: 100% auto;
+      height: 100%;
+      /* make the body fill the browser window */
       background-attachment: fixed;
     }
 
