@@ -53,11 +53,24 @@
     }
 
     /* Once the item is inside a box, make it smaller */
+    /* Make each item a single-line box with ellipsis if text is too long */
     .dropbox .draggable {
+      display: block;
       font-size: 0.8rem;
-      /* or even smaller if you need */
+      /* or whatever size you like */
       padding: 4px 6px;
-      margin: 3px;
+      margin: 0;
+      /* grid gap now controls spacing */
+      border: 1px solid #ADADAD;
+      border-radius: 4px;
+
+      /* Single-line truncation */
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      /* Optionally specify a fixed or max width or let the grid handle it */
+      width: 100%;
+      box-sizing: border-box;
     }
 
 
@@ -88,17 +101,18 @@
     }
 
     .dropbox {
+      display: grid;
+      /* 2 columns of equal width; adjust gap as desired */
+      grid-template-columns: repeat(2, 1fr);
+      gap: 5px;
+
+      /* still keep your other styles as needed */
       position: relative;
-      flex: 1;
       margin: 5px;
       border: 2px dashed #576D4A;
-      /* Muted green */
-      display: flex;
-      flex-direction: column;
       min-height: 100px;
       overflow-y: auto;
       background-color: #FEFEFC;
-      /* Subtle difference from body */
     }
 
     /* For box #1, #2, #3, apply the same approach with different images */
